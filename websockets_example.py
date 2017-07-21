@@ -1,14 +1,17 @@
 #!/usr/bin/env python
 
+import uuid
 import asyncio
 import websockets
 
 from myproducer import producer
 
+producer_uuid = uuid.uuid4()
+
 async def handler(websocket):
     while True:
         msg = await websocket.recv()
-        future = producer.send('gdax', msg.encode('utf-8'))
+        future = producer.send('gdax', msg.encode('utf-8'), producer_uuid.bytes)
         result = future.get(timeout=10)
 
 async def main():

@@ -1,9 +1,12 @@
+import uuid
 import websocket
 
 from myproducer import producer
 
+producer_uuid = uuid.uuid4()
+
 def on_message(ws, message):
-    future = producer.send('gdax', message.encode('utf-8'))
+    future = producer.send('gdax', message.encode('utf-8'), producer_uuid.bytes)
     result = future.get(timeout=10)
 
 def on_error(ws, error):
