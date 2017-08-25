@@ -18,7 +18,7 @@ class DummyClient(WebSocketClient):
         print("Closed down", code, reason)
 
     def received_message(self, m):
-        future = producer.send('gdax', str(m).encode('utf-8'), producer_uuid.bytes)
+        future = producer.send('ws4py-gdax', str(m).encode('utf-8'), producer_uuid.bytes)
         result = future.get(timeout=10)
 
 if __name__ == '__main__':
