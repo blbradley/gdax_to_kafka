@@ -1,8 +1,11 @@
+import logging
 import uuid
 
 from ws4py.client.threadedclient import WebSocketClient
 
 from myproducer import producer
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 producer_uuid = uuid.uuid4()
 
@@ -15,7 +18,7 @@ class DummyClient(WebSocketClient):
         self.send(data_provider())
 
     def closed(self, code, reason=None):
-        print("Closed down", code, reason)
+        logging.warning("Closed down", code, reason)
 
     def received_message(self, m):
         future = producer.send('gdax', str(m).encode('utf-8'), producer_uuid.bytes)

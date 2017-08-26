@@ -1,7 +1,10 @@
 import uuid
+import logging
 import websocket
 
 from myproducer import producer
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 producer_uuid = uuid.uuid4()
 
@@ -10,10 +13,10 @@ def on_message(ws, message):
     result = future.get(timeout=10)
 
 def on_error(ws, error):
-    print(error)
+    logging.warning(error)
 
 def on_close(ws):
-    print("### closed ###")
+    logging.warning("### closed ###")
 
 msg = """{"type": "subscribe","product_ids":["BTC-USD"]}"""
 
