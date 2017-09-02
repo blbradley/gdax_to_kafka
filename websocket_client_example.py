@@ -22,6 +22,7 @@ def on_message(ws, message):
         key=str(producer_uuid),
         key_schema=key_schema,
     )
+    producer.poll(0)
 
 def on_error(ws, error):
     logging.warning(error)
