@@ -1,17 +1,13 @@
 #!/usr/bin/env python
 
 import uuid
-import json
 from datetime import datetime
 import asyncio
-from confluent_kafka import avro
 import websockets
 
 from myproducer import producer
 
 producer_uuid = uuid.uuid4()
-key_schema = avro.loads(json.dumps({'type': 'string'}))
-value_schema = avro.load('websocket-raw.avsc')
 
 async def handler(websocket):
     while True:
@@ -20,9 +16,7 @@ async def handler(websocket):
         producer.produce(
             topic='websockets-gdax',
             value=value,
-            value_schema=value_schema,
             key=str(producer_uuid),
-            key_schema=key_schema,
         )
         producer.poll(0)
 

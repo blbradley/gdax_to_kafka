@@ -1,8 +1,6 @@
 import uuid
 import logging
-import json
 from datetime import datetime
-from confluent_kafka import avro
 import websocket
 
 from myproducer import producer
@@ -10,17 +8,13 @@ from myproducer import producer
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 producer_uuid = uuid.uuid4()
-key_schema = avro.loads(json.dumps({'type': 'string'}))
-value_schema = avro.load('websocket-raw.avsc')
 
 def on_message(ws, message):
     value = {'timestamp': str(datetime.utcnow()), 'producerUUID': str(producer_uuid), 'data': message}
     producer.produce(
         topic='websocket_client-gdax',
         value=value,
-        value_schema=value_schema,
         key=str(producer_uuid),
-        key_schema=key_schema,
     )
     producer.poll(0)
 
