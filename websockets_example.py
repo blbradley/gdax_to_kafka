@@ -1,18 +1,30 @@
 #!/usr/bin/env python
 
 import uuid
+import json
+from datetime import datetime
 import asyncio
+from confluent_kafka import avro
 import websockets
 
 from myproducer import producer
 
 producer_uuid = uuid.uuid4()
+key_schema = avro.loads(json.dumps({'type': 'string'}))
+value_schema = avro.load('websocket-raw.avsc')
 
 async def handler(websocket):
     while True:
         msg = await websocket.recv()
-        future = producer.send('websockets-gdax', msg.encode('utf-8'), producer_uuid.bytes)
-        result = future.get(timeout=10)
+        value = {'timestamp': str(datetime.utcnow()), 'producerUUID': str(producer_uuid), 'data': msg}
+        producer.produce(
+            topic='websockets-gdax',
+            value=value,
+            value_schema=value_schema,
+            key=str(producer_uuid),
+            key_schema=key_schema,
+        )
+        producer.poll(0)
 
 async def main():
     async with websockets.connect('wss://ws-feed.gdax.com') as websocket:
