@@ -1,5 +1,6 @@
 import uuid
 import logging
+from datetime import datetime
 import websocket
 
 from myproducer import producer
@@ -9,8 +10,13 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 producer_uuid = uuid.uuid4()
 
 def on_message(ws, message):
-    future = producer.send('websocket_client-gdax', message.encode('utf-8'), producer_uuid.bytes)
-    result = future.get(timeout=10)
+    value = {'timestamp': str(datetime.utcnow()), 'producerUUID': str(producer_uuid), 'data': message}
+    producer.produce(
+        topic='websocket_client-gdax',
+        value=value,
+        key=str(producer_uuid),
+    )
+    producer.poll(0)
 
 def on_error(ws, error):
     logging.warning(error)

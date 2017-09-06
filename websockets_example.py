@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import uuid
+from datetime import datetime
 import asyncio
 import websockets
 
@@ -11,8 +12,13 @@ producer_uuid = uuid.uuid4()
 async def handler(websocket):
     while True:
         msg = await websocket.recv()
-        future = producer.send('websockets-gdax', msg.encode('utf-8'), producer_uuid.bytes)
-        result = future.get(timeout=10)
+        value = {'timestamp': str(datetime.utcnow()), 'producerUUID': str(producer_uuid), 'data': msg}
+        producer.produce(
+            topic='websockets-gdax',
+            value=value,
+            key=str(producer_uuid),
+        )
+        producer.poll(0)
 
 async def main():
     async with websockets.connect('wss://ws-feed.gdax.com') as websocket:

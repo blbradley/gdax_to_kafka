@@ -1,5 +1,6 @@
 import logging
 import uuid
+from datetime import datetime
 
 from ws4py.client.threadedclient import WebSocketClient
 
@@ -21,8 +22,13 @@ class DummyClient(WebSocketClient):
         logging.warning("Closed down", code, reason)
 
     def received_message(self, m):
-        future = producer.send('ws4py-gdax', str(m).encode('utf-8'), producer_uuid.bytes)
-        result = future.get(timeout=10)
+        value = {'timestamp': str(datetime.utcnow()), 'producerUUID': str(producer_uuid), 'data': str(m)}
+        producer.produce(
+            topic='ws4py-gdax',
+            value=value,
+            key=str(producer_uuid),
+        )
+        producer.poll(0)
 
 if __name__ == '__main__':
     try:
