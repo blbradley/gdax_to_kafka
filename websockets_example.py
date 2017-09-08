@@ -5,12 +5,14 @@ from datetime import datetime
 import asyncio
 import websockets
 
+from gdax import create_raw
 from myproducer import producer
 
 async def handler(websocket):
     while True:
         msg = await websocket.recv()
-        value = {'timestamp': str(datetime.utcnow()), 'producerUUID': producer.uuid.bytes, 'data': msg}
+        dt = datetime.utcnow()
+        value = create_raw(dt, msg)
         producer.produce(
             topic='websockets-gdax',
             value=value,

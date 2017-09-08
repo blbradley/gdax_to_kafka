@@ -4,6 +4,7 @@ from datetime import datetime
 
 from ws4py.client.threadedclient import WebSocketClient
 
+from gdax import create_raw
 from myproducer import producer
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -20,7 +21,8 @@ class DummyClient(WebSocketClient):
         logging.warning("Closed down", code, reason)
 
     def received_message(self, m):
-        value = {'timestamp': str(datetime.utcnow()), 'producerUUID': producer.uuid.bytes, 'data': str(m)}
+        dt = datetime.utcnow()
+        value = create_raw(dt, str(m))
         producer.produce(
             topic='ws4py-gdax',
             value=value,
