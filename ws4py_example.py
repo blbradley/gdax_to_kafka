@@ -8,8 +8,6 @@ from myproducer import producer
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-producer_uuid = uuid.uuid4()
-
 class DummyClient(WebSocketClient):
     def opened(self):
         def data_provider():
@@ -22,11 +20,11 @@ class DummyClient(WebSocketClient):
         logging.warning("Closed down", code, reason)
 
     def received_message(self, m):
-        value = {'timestamp': str(datetime.utcnow()), 'producerUUID': str(producer_uuid), 'data': str(m)}
+        value = {'timestamp': str(datetime.utcnow()), 'producerUUID': producer.uuid.bytes, 'data': str(m)}
         producer.produce(
             topic='ws4py-gdax',
             value=value,
-            key=str(producer_uuid),
+            key=producer.uuid.bytes,
         )
         producer.poll(0)
 

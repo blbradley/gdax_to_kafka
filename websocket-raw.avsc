@@ -9,7 +9,7 @@
       },
       {
         "name": "producerUUID",
-        "type": "string"
+        "type": "bytes"
       },
       {
         "name": "data",
