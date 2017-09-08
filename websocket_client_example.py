@@ -1,4 +1,3 @@
-import uuid
 import logging
 from datetime import datetime
 import websocket
@@ -7,14 +6,12 @@ from myproducer import producer
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-producer_uuid = uuid.uuid4()
-
 def on_message(ws, message):
-    value = {'timestamp': str(datetime.utcnow()), 'producerUUID': str(producer_uuid), 'data': message}
+    value = {'timestamp': str(datetime.utcnow()), 'producerUUID': producer_uuid.bytes, 'data': message}
     producer.produce(
         topic='websocket_client-gdax',
         value=value,
-        key=str(producer_uuid),
+        key=producer.uuid.bytes,
     )
     producer.poll(0)
 

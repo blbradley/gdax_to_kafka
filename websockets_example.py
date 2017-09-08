@@ -7,16 +7,14 @@ import websockets
 
 from myproducer import producer
 
-producer_uuid = uuid.uuid4()
-
 async def handler(websocket):
     while True:
         msg = await websocket.recv()
-        value = {'timestamp': str(datetime.utcnow()), 'producerUUID': str(producer_uuid), 'data': msg}
+        value = {'timestamp': str(datetime.utcnow()), 'producerUUID': producer.uuid.bytes, 'data': msg}
         producer.produce(
             topic='websockets-gdax',
             value=value,
-            key=str(producer_uuid),
+            key=producer.uuid.bytes,
         )
         producer.poll(0)
 
