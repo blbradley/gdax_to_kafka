@@ -2,12 +2,14 @@ import logging
 from datetime import datetime
 import websocket
 
+from gdax import create_raw
 from myproducer import producer
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 def on_message(ws, message):
-    value = {'timestamp': str(datetime.utcnow()), 'producerUUID': producer.uuid.bytes, 'data': message}
+    dt = datetime.utcnow()
+    value = create_raw(dt, message)
     producer.produce(
         topic='websocket_client-gdax',
         value=value,
