@@ -7,7 +7,7 @@ from myproducer import producer
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 def on_message(ws, message):
-    value = {'timestamp': str(datetime.utcnow()), 'producerUUID': producer_uuid.bytes, 'data': message}
+    value = {'timestamp': str(datetime.utcnow()), 'producerUUID': producer.uuid.bytes, 'data': message}
     producer.produce(
         topic='websocket_client-gdax',
         value=value,
