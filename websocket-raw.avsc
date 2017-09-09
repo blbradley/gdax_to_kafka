@@ -4,7 +4,7 @@
     "namespace": "gdax",
     "fields": [
       {
-        "name": "timestamp",
+        "name": "time_collected",
         "type": "string"
       },
       {
@@ -12,8 +12,68 @@
         "type": "bytes"
       },
       {
-        "name": "data",
+        "name": "type",
         "type": "string"
+      },
+      {
+        "name": "time",
+        "type": "string"
+      },
+      {
+        "name": "product_id",
+        "type": "string"
+      },
+      {
+        "name": "sequence",
+        "type": "long"
+      },
+      {
+        "name": "order_id",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "trade_id",
+        "type": ["null", "long"]
+      },
+      {
+        "name": "maker_order_id",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "taker_order_id",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "new_size",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "old_size",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "size",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "price",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "funds",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "remaining_size",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "side",
+        "type": "string"
+      },
+      {
+        "name": "order_type",
+        "type": ["null", "string"]
       }
     ]
 }
