@@ -1,11 +1,10 @@
 import logging
 import uuid
 from datetime import datetime
-import json
 
 from ws4py.client.threadedclient import WebSocketClient
 
-from gdax import create_raw, subscription_message
+from gdax import create_raw
 from myproducer import producer
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -13,7 +12,8 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 class DummyClient(WebSocketClient):
     def opened(self):
         def data_provider():
-            return json.dumps(subscription_message)
+            msg = """{"type": "subscribe","product_ids":["BTC-USD"]}"""
+            return msg
 
         self.send(data_provider())
 
