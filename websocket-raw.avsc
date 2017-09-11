@@ -12,7 +12,43 @@
         "type": "bytes"
       },
       {
-        "name": "data",
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "trade_id",
+        "type": "long"
+      },
+      {
+        "name": "sequence",
+        "type": "long"
+      },
+      {
+        "name": "time",
+        "type": "string"
+      },
+      {
+        "name": "product_id",
+        "type": "string"
+      },
+      {
+        "name": "price",
+        "type": "string"
+      },
+      {
+        "name": "side",
+        "type": "string"
+      },
+      {
+        "name": "last_size",
+        "type": "string"
+      },
+      {
+        "name": "best_bid",
+        "type": "string"
+      },
+      {
+        "name": "best_ask",
         "type": "string"
       }
     ]

@@ -1,15 +1,22 @@
 import logging
 from datetime import datetime
+import json
 import websocket
 
 from gdax import create_raw
 from myproducer import producer
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
 
 def on_message(ws, message):
     dt = datetime.utcnow()
+    logging.debug('received websocket message: {}'.format(message))
+
     value = create_raw(dt, message)
+    if value['type'] == 'subscriptions':
+        logging.info('received subscription response: {}'.format(message))
+        return
+
     producer.produce(
         topic='websocket_client-gdax',
         value=value,
@@ -23,10 +30,15 @@ def on_error(ws, error):
 def on_close(ws):
     logging.warning("### closed ###")
 
-msg = """{"type": "subscribe","product_ids":["BTC-USD"]}"""
+msg = json.dumps({
+    'type': 'subscribe',
+    'product_ids':['BTC-USD'],
+    'channels': ['ticker'],
+})
 
 def on_open(ws):
     ws.send(msg)
+    logging.debug('sent websocket message: {}'.format(msg))
 
 if __name__ == "__main__":
     ws = websocket.WebSocketApp("wss://ws-feed.gdax.com",
