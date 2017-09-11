@@ -3,7 +3,7 @@ from datetime import datetime
 import json
 import websocket
 
-from gdax import create_raw
+from gdax import create_raw, subscription_message
 from myproducer import producer
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
@@ -30,13 +30,8 @@ def on_error(ws, error):
 def on_close(ws):
     logging.warning("### closed ###")
 
-msg = json.dumps({
-    'type': 'subscribe',
-    'product_ids':['BTC-USD'],
-    'channels': ['ticker', 'level2'],
-})
-
 def on_open(ws):
+    msg = json.dumps(subscription_message)
     ws.send(msg)
     logging.debug('sent websocket message: {}'.format(msg))
 

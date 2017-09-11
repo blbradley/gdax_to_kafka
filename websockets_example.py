@@ -5,7 +5,7 @@ from datetime import datetime
 import asyncio
 import websockets
 
-from gdax import create_raw
+from gdax import create_raw, subscription_message
 from myproducer import producer
 
 async def handler(websocket):
@@ -22,8 +22,7 @@ async def handler(websocket):
 
 async def main():
     async with websockets.connect('wss://ws-feed.gdax.com') as websocket:
-        msg = """{"type": "subscribe","product_ids":["BTC-USD"]}"""
-        await websocket.send(msg)
+        await websocket.send(json.dumps(subscription_message))
         await handler(websocket)
 
 if __name__ == "__main__":
