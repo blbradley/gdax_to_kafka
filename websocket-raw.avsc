@@ -17,39 +17,69 @@
       },
       {
         "name": "trade_id",
-        "type": "long"
+        "type": ["null", "long"]
       },
       {
         "name": "sequence",
-        "type": "long"
+        "type": ["null", "long"]
       },
       {
         "name": "time",
-        "type": "string"
+        "type": ["null", "string"]
       },
       {
         "name": "product_id",
-        "type": "string"
+        "type": ["null", "string"]
       },
       {
         "name": "price",
-        "type": "string"
+        "type": ["null", "string"]
       },
       {
         "name": "side",
-        "type": "string"
+        "type": ["null", "string"]
       },
       {
         "name": "last_size",
-        "type": "string"
+        "type": ["null", "string"]
       },
       {
         "name": "best_bid",
-        "type": "string"
+        "type": ["null", "string"]
       },
       {
         "name": "best_ask",
-        "type": "string"
+        "type": ["null", "string"]
+      },
+      {
+        "name": "bids",
+        "type": ["null", {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": "string"
+          }
+        }]
+      },
+      {
+        "name": "asks",
+        "type": ["null", {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": "string"
+          }
+        }]
+      },
+      {
+        "name": "changes",
+        "type": ["null", {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": "string"
+          }
+        }]
       }
     ]
 }

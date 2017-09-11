@@ -33,7 +33,7 @@ def on_close(ws):
 msg = json.dumps({
     'type': 'subscribe',
     'product_ids':['BTC-USD'],
-    'channels': ['ticker'],
+    'channels': ['ticker', 'level2'],
 })
 
 def on_open(ws):
