@@ -4,6 +4,7 @@ import uuid
 from datetime import datetime
 import asyncio
 import websockets
+import json
 
 from gdax import create_raw, subscription_message
 from myproducer import producer
