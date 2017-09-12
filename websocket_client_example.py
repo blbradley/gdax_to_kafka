@@ -11,12 +11,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 def on_message(ws, message):
     dt = datetime.utcnow()
     logging.debug('received websocket message: {}'.format(message))
-
     value = create_raw(dt, message)
-    if value['type'] == 'subscriptions':
-        logging.info('received subscription response: {}'.format(message))
-        return
-
     producer.produce(
         topic='websocket_client-gdax',
         value=value,

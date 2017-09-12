@@ -16,6 +16,29 @@
         "type": "string"
       },
       {
+        "name": "channels",
+        "type": ["null", {
+          "type": "array",
+          "items": {
+            "type": "record",
+            "name": "channel",
+            "fields": [
+              {
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "name": "product_ids",
+                "type": {
+                  "type": "array",
+                  "items": "string"
+                }
+              }
+            ]
+          }
+        }]
+      },
+      {
         "name": "trade_id",
         "type": ["null", "long"]
       },
