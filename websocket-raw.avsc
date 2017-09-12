@@ -12,8 +12,97 @@
         "type": "bytes"
       },
       {
-        "name": "data",
+        "name": "type",
         "type": "string"
+      },
+      {
+        "name": "channels",
+        "type": ["null", {
+          "type": "array",
+          "items": {
+            "type": "record",
+            "name": "channel",
+            "fields": [
+              {
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "name": "product_ids",
+                "type": {
+                  "type": "array",
+                  "items": "string"
+                }
+              }
+            ]
+          }
+        }]
+      },
+      {
+        "name": "trade_id",
+        "type": ["null", "long"]
+      },
+      {
+        "name": "sequence",
+        "type": ["null", "long"]
+      },
+      {
+        "name": "time",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "product_id",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "price",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "side",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "last_size",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "best_bid",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "best_ask",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "bids",
+        "type": ["null", {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": "string"
+          }
+        }]
+      },
+      {
+        "name": "asks",
+        "type": ["null", {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": "string"
+          }
+        }]
+      },
+      {
+        "name": "changes",
+        "type": ["null", {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": "string"
+          }
+        }]
       }
     ]
 }
