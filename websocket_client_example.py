@@ -6,7 +6,7 @@ import websocket
 from gdax import create_raw, subscription_message
 from myproducer import producer
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 def on_message(ws, message):
     dt = datetime.utcnow()
