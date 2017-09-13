@@ -14,13 +14,18 @@ sched = BlockingScheduler()
 
 key_schema = avro.loads(json.dumps({'type': 'string'}))
 
-def my_job():
-    logging.warning('foo')
-    r = requests.get('https://api.gdax.com/products/BTC-USD/ticker')
-    print(r.json())
+baseurl = 'https://api.gdax.com/products/BTC-USD/'
+
+type_to_topic = {
+    'ticker': 'gdax-polling-ticker',
+    'trades': 'gdax-polling-trades',
+}
+
+def my_job(type):
+    r = requests.get(f'{baseurl}{type}')
     value = str(r.json())
     producer.produce(
-        topic='gdax-polling',
+        topic=type_to_topic[type],
         value=value,
         key=str(producer.uuid),
         key_schema=key_schema,
@@ -28,5 +33,6 @@ def my_job():
     )
     producer.poll(0)
 
-sched.add_job(my_job, 'interval', seconds=1)
+sched.add_job(my_job, 'interval', ('ticker', ), seconds=2)
+sched.add_job(my_job, 'interval', ('trades', ), seconds=2)
 sched.start()
