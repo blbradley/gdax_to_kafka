@@ -10,7 +10,7 @@ sched = BlockingScheduler()
 
 def my_job():
     logging.warning('foo')
-    r = requests.get('https://api.gdax.com/products/BTC-USD/book?level=2')
+    r = requests.get('https://api.gdax.com/products/BTC-USD/ticker')
     print(r.json())
 
 sched.add_job(my_job, 'interval', seconds=1)
