@@ -1,0 +1,31 @@
+{
+    "type": "array",
+    "name": "trades",
+    "namespace": "gdax.polling",
+    "items": {
+      "type": "record",
+      "name": "trade",
+      "fields": [
+        {
+          "name": "time",
+          "type": "string"
+        },
+        {
+          "name": "trade_id",
+          "type": "long"
+        },
+        {
+          "name": "price",
+          "type": "string"
+        },
+        {
+          "name": "size",
+          "type": "string"
+        },
+        {
+          "name": "side",
+          "type": "string"
+        }
+      ]
+    }
+}

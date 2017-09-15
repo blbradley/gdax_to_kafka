@@ -1,10 +1,16 @@
 import logging
 import json
 
+from avro import schema
 from apscheduler.schedulers.background import BlockingScheduler
 from confluent_kafka import avro
 import requests
 
+# monkey patch schema hash functions
+def hash_func(self):
+    return(hash(str(self)))
+
+schema.ArraySchema.__hash__ = hash_func
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
@@ -40,13 +46,14 @@ def produce_ticker():
 def produce_trades():
     from myproducer import producer
     r = requests.get('https://api.gdax.com/products/BTC-USD/trades')
-    value = str(r.json())
+    value = r.json()
+    value_schema = avro.load('schemas/polling-trades.avsc')
     producer.produce(
         topic='gdax-polling-trades',
         value=value,
         key=str(producer.uuid),
         key_schema=key_schema,
-        value_schema=key_schema,
+        value_schema=value_schema,
     )
     producer.poll(0)
 
