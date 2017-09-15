@@ -19,13 +19,14 @@ key_schema = avro.loads(json.dumps({'type': 'string'}))
 def produce_book():
     from myproducer import producer
     r = requests.get('https://api.gdax.com/products/BTC-USD/book?level=3')
-    value = str(r.json())
+    value = r.json()
+    value_schema = avro.load('schemas/polling-level3.avsc')
     producer.produce(
         topic='gdax-polling-book',
         value=value,
         key=str(producer.uuid),
         key_schema=key_schema,
-        value_schema=key_schema,
+        value_schema=value_schema,
     )
     producer.poll(0)
 
