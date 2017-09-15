@@ -26,13 +26,14 @@ def produce_book():
 def produce_ticker():
     from myproducer import producer
     r = requests.get('https://api.gdax.com/products/BTC-USD/ticker')
-    value = str(r.json())
+    value = r.json()
+    value_schema = avro.load('schemas/polling-ticker.avsc')
     producer.produce(
         topic='gdax-polling-ticker',
         value=value,
         key=str(producer.uuid),
         key_schema=key_schema,
-        value_schema=key_schema,
+        value_schema=value_schema,
     )
     producer.poll(0)
 
