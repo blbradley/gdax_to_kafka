@@ -1,0 +1,31 @@
+{
+    "type": "record",
+    "name": "level3",
+    "namespace": "gdax.polling",
+    "fields": [
+      {
+        "name": "sequence",
+        "type": "long"
+      },
+      {
+        "name": "bids",
+        "type": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": "string"
+          }
+        }
+      },
+      {
+        "name": "asks",
+        "type": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": "string"
+          }
+        }
+      }
+    ]
+}

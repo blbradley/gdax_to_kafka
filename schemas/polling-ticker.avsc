@@ -1,0 +1,35 @@
+{
+    "type": "record",
+    "name": "ticker",
+    "namespace": "gdax.polling",
+    "fields": [
+      {
+        "name": "trade_id",
+        "type": "long"
+      },
+      {
+        "name": "price",
+        "type": "string"
+      },
+      {
+        "name": "size",
+        "type": "string"
+      },
+      {
+        "name": "bid",
+        "type": "string"
+      },
+      {
+        "name": "ask",
+        "type": "string"
+      },
+      {
+        "name": "volume",
+        "type": "string"
+      },
+      {
+        "name": "time",
+        "type": "string"
+      }
+    ]
+}
