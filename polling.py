@@ -61,7 +61,7 @@ def produce_trades():
 if __name__ == '__main__':
     sched = BlockingScheduler()
     sched.add_executor('processpool')
-    sched.add_job(produce_book, 'interval', seconds=10)
+    sched.add_job(produce_book, 'interval', seconds=30)
     sched.add_job(produce_ticker, 'interval', seconds=1)
     sched.add_job(produce_trades, 'interval', seconds=1)
 
