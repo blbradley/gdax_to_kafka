@@ -103,6 +103,42 @@
             "items": "string"
           }
         }]
+      },
+      {
+        "name": "order_id",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "maker_order_id",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "taker_order_id",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "new_size",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "old_size",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "size",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "funds",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "remaining_size",
+        "type": ["null", "string"]
+      },
+      {
+        "name": "order_type",
+        "type": ["null", "string"]
       }
     ]
 }
