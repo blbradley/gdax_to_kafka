@@ -22,7 +22,7 @@ class DummyClient(WebSocketClient):
     def received_message(self, m):
         dt = datetime.utcnow()
         logging.debug('received websocket message: {}'.format(m))
-        value = create_raw(dt, str(m))
+        value = create_raw(dt, producer.uuid, str(m))
         producer.produce(
             topic='ws4py-gdax',
             value=value,

@@ -13,7 +13,7 @@ async def handler(websocket):
     while True:
         msg = await websocket.recv()
         dt = datetime.utcnow()
-        value = create_raw(dt, msg)
+        value = create_raw(dt, producer.uuid, msg)
         producer.produce(
             topic='websockets-gdax',
             value=value,

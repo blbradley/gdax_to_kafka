@@ -11,7 +11,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 def on_message(ws, message):
     dt = datetime.utcnow()
     logging.debug('received websocket message: {}'.format(message))
-    value = create_raw(dt, message)
+    value = create_raw(dt, producer.uuid, message)
     producer.produce(
         topic='websocket_client-gdax',
         value=value,

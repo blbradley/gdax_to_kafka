@@ -6,6 +6,8 @@ from apscheduler.schedulers.background import BlockingScheduler
 from confluent_kafka import avro
 import requests
 
+import gdax
+
 # monkey patch schema hash functions
 def hash_func(self):
     return(hash(str(self)))
@@ -16,19 +18,25 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 key_schema = avro.loads(json.dumps({'type': 'string'}))
 
-def produce_book():
+def produce_book(level):
     from myproducer import producer
-    r = requests.get('https://api.gdax.com/products/BTC-USD/book?level=3')
+    r = requests.get(f'https://api.gdax.com/products/BTC-USD/book?level={level}')
     value = r.json()
-    value_schema = avro.load('schemas/polling-level3.avsc')
+    value_schema = avro.load(f'schemas/polling-level{level}.avsc')
     producer.produce(
-        topic='gdax-polling-book',
+        topic=f'gdax-polling-book-level{level}',
         value=value,
         key=str(producer.uuid),
         key_schema=key_schema,
         value_schema=value_schema,
     )
     producer.poll(0)
+
+def produce_level2_book():
+  produce_book(2)
+
+def produce_level3_book():
+  produce_book(3)
 
 def produce_ticker():
     from myproducer import producer
@@ -61,7 +69,10 @@ def produce_trades():
 if __name__ == '__main__':
     sched = BlockingScheduler()
     sched.add_executor('processpool')
-    sched.add_job(produce_book, 'interval', seconds=30)
+    if gdax.enable_level2 is not '0':
+        sched.add_job(produce_level2_book, 'interval', seconds=30)
+    if gdax.enable_level3 is not '0':
+        sched.add_job(produce_level3_book, 'interval', seconds=30)
     sched.add_job(produce_ticker, 'interval', seconds=1)
     sched.add_job(produce_trades, 'interval', seconds=1)
 
