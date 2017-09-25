@@ -17,6 +17,7 @@ producer = AvroProducer({
         'request.required.acks': 'all',
         'retries': 10000000,
         'max.in.flight.requests.per.connection': 1,
+        'message.max.bytes': 2000024,  # 2x default of Kafka 0.10.2.1
     },
     default_key_schema=key_schema,
     default_value_schema=value_schema,
