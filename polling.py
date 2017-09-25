@@ -70,11 +70,11 @@ if __name__ == '__main__':
     sched = BlockingScheduler()
     sched.add_executor('processpool')
     if gdax.enable_level2:
-        sched.add_job(produce_level2_book, 'interval', seconds=30)
+        sched.add_job(produce_level2_book, 'interval', seconds=60)
     if gdax.enable_level3:
-        sched.add_job(produce_level3_book, 'interval', seconds=30)
-    sched.add_job(produce_ticker, 'interval', seconds=1)
-    sched.add_job(produce_trades, 'interval', seconds=1)
+        sched.add_job(produce_level3_book, 'interval', seconds=60)
+    sched.add_job(produce_ticker, 'interval', seconds=2)
+    sched.add_job(produce_trades, 'interval', seconds=2)
 
     try:
         sched.start()
