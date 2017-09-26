@@ -1,5 +1,6 @@
 import logging
 import json
+from datetime import datetime
 
 from avro import schema
 from apscheduler.schedulers.background import BlockingScheduler
@@ -21,7 +22,10 @@ key_schema = avro.loads(json.dumps({'type': 'string'}))
 def produce_book(level):
     from myproducer import producer
     r = requests.get(f'https://api.gdax.com/products/BTC-USD/book?level={level}')
+    dt = datetime.utcnow()
     value = r.json()
+    value['time_collected'] = dt.isoformat()
+    value['producerUUID'] = producer.uuid.bytes
     value_schema = avro.load(f'schemas/polling-level{level}.avsc')
     producer.produce(
         topic=f'gdax-polling-book-level{level}',
@@ -41,7 +45,10 @@ def produce_level3_book():
 def produce_ticker():
     from myproducer import producer
     r = requests.get('https://api.gdax.com/products/BTC-USD/ticker')
+    dt = datetime.utcnow()
     value = r.json()
+    value['time_collected'] = dt.isoformat()
+    value['producerUUID'] = producer.uuid.bytes
     value_schema = avro.load('schemas/polling-ticker.avsc')
     producer.produce(
         topic='gdax-polling-ticker',
@@ -55,7 +62,9 @@ def produce_ticker():
 def produce_trades():
     from myproducer import producer
     r = requests.get('https://api.gdax.com/products/BTC-USD/trades')
-    value = r.json()
+    dt = datetime.utcnow()
+    trades = r.json()
+    value = {'time_collected': dt.isoformat(),  'producerUUID': producer.uuid.bytes, 'data': trades}
     value_schema = avro.load('schemas/polling-trades.avsc')
     producer.produce(
         topic='gdax-polling-trades',

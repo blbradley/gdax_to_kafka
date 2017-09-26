@@ -4,6 +4,14 @@
     "namespace": "gdax.polling",
     "fields": [
       {
+        "name": "time_collected",
+        "type": "string"
+      },
+      {
+        "name": "producerUUID",
+        "type": "bytes"
+      },
+      {
         "name": "sequence",
         "type": "long"
       },
