@@ -19,6 +19,6 @@ subscription_message = {
 
 def create_raw(dt, producer_uuid, data):
     data_dict = json.loads(data)
-    extra = {'timestamp': dt.isoformat(), 'producerUUID': producer_uuid.bytes}
+    extra = {'time_collected': dt.isoformat(), 'producerUUID': producer_uuid.bytes}
     raw = {**extra, **data_dict}
     return raw
