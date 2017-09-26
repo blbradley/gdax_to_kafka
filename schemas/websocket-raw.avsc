@@ -1,10 +1,10 @@
 {
     "type": "record",
     "name": "raw",
-    "namespace": "gdax",
+    "namespace": "gdax.websocket",
     "fields": [
       {
-        "name": "timestamp",
+        "name": "time_collected",
         "type": "string"
       },
       {
