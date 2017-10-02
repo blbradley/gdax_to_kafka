@@ -21,7 +21,10 @@ key_schema = avro.loads(json.dumps({'type': 'string'}))
 
 def produce_book(level):
     from myproducer import producer
-    r = requests.get(f'https://api.gdax.com/products/BTC-USD/book?level={level}')
+    r = requests.get(
+        f'https://api.gdax.com/products/BTC-USD/book?level={level}',
+        timeout=5,
+        )
     dt = datetime.utcnow()
     value = r.json()
     value['time_collected'] = dt.isoformat()
@@ -44,7 +47,10 @@ def produce_level3_book():
 
 def produce_ticker():
     from myproducer import producer
-    r = requests.get('https://api.gdax.com/products/BTC-USD/ticker')
+    r = requests.get(
+        'https://api.gdax.com/products/BTC-USD/ticker',
+        timeout=5,
+        )
     dt = datetime.utcnow()
     value = r.json()
     value['time_collected'] = dt.isoformat()
@@ -61,7 +67,10 @@ def produce_ticker():
 
 def produce_trades():
     from myproducer import producer
-    r = requests.get('https://api.gdax.com/products/BTC-USD/trades')
+    r = requests.get(
+        'https://api.gdax.com/products/BTC-USD/trades',
+        timeout=5,
+        )
     dt = datetime.utcnow()
     trades = r.json()
     value = {'time_collected': dt.isoformat(),  'producerUUID': producer.uuid.bytes, 'data': trades}
