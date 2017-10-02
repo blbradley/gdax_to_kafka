@@ -17,8 +17,6 @@ schema.ArraySchema.__hash__ = hash_func
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-key_schema = avro.loads(json.dumps({'type': 'string'}))
-
 def produce_book(level):
     from myproducer import producer
     r = requests.get(
@@ -33,8 +31,7 @@ def produce_book(level):
     producer.produce(
         topic=f'gdax-polling-book-level{level}',
         value=value,
-        key=str(producer.uuid),
-        key_schema=key_schema,
+        key=producer.uuid.bytes,
         value_schema=value_schema,
     )
     producer.poll(0)
@@ -59,8 +56,7 @@ def produce_ticker():
     producer.produce(
         topic='gdax-polling-ticker',
         value=value,
-        key=str(producer.uuid),
-        key_schema=key_schema,
+        key=producer.uuid.bytes,
         value_schema=value_schema,
     )
     producer.poll(0)
@@ -78,8 +74,7 @@ def produce_trades():
     producer.produce(
         topic='gdax-polling-trades',
         value=value,
-        key=str(producer.uuid),
-        key_schema=key_schema,
+        key=producer.uuid.bytes,
         value_schema=value_schema,
     )
     producer.poll(0)
