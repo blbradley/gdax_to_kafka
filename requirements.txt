@@ -1,8 +1,8 @@
 APScheduler==3.3.1
-avro-python3==1.8.2
+#avro-python3==1.8.2
 certifi==2017.7.27.1
 chardet==3.0.4
-confluent-kafka==0.11.0
+#confluent-kafka==0.11.0
 idna==2.6
 pytz==2017.2
 requests==2.18.4
@@ -10,5 +10,5 @@ six==1.10.0
 tzlocal==1.4
 urllib3==1.22
 websocket-client==0.44.0
-websockets==3.3
+#websockets==3.3
 ws4py==0.3.4

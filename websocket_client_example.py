@@ -3,21 +3,23 @@ from datetime import datetime
 import json
 import websocket
 
-from gdax import create_raw, subscription_message
-from myproducer import producer
+from gdax import subscription_message
+#from gdax import create_raw, subscription_message
+#from myproducer import producer
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 def on_message(ws, message):
-    dt = datetime.utcnow()
-    logging.debug('received websocket message: {}'.format(message))
-    value = create_raw(dt, producer.uuid, message)
-    producer.produce(
-        topic='websocket_client-gdax',
-        value=value,
-        key=producer.uuid.bytes,
-    )
-    producer.poll(0)
+    #dt = datetime.utcnow()
+    #logging.debug('received websocket message: {}'.format(message))
+    #value = create_raw(dt, producer.uuid, message)
+    #producer.produce(
+    #    topic='websocket_client-gdax',
+    #    value=value,
+    #    key=producer.uuid.bytes,
+    #)
+    #producer.poll(0)
+    logging.warning(message)
 
 def on_error(ws, error):
     logging.warning(error)

@@ -17,8 +17,8 @@ subscription_message = {
     'channels': channels,
 }
 
-def create_raw(dt, producer_uuid, data):
-    data_dict = json.loads(data)
-    extra = {'time_collected': dt.isoformat(), 'producerUUID': producer_uuid.bytes}
-    raw = {**extra, **data_dict}
-    return raw
+#def create_raw(dt, producer_uuid, data):
+#    data_dict = json.loads(data)
+#    extra = {'time_collected': dt.isoformat(), 'producerUUID': producer_uuid.bytes}
+#    raw = {**extra, **data_dict}
+#    return raw
