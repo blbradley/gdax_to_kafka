@@ -1,5 +1,7 @@
 runtime: python27
 api_version: 1
+threadsafe: False
+
 manual_scaling:
   instances: 1
 
