@@ -5,6 +5,10 @@ threadsafe: False
 manual_scaling:
   instances: 1
 
+libraries:
+- name: ssl
+  version: 2.7.11
+
 handlers:
   - url: /_ah/start
     script: websocket_client_example
