@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0, 'libs')
+
 import logging
 from datetime import datetime
 import json
