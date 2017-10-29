@@ -11,4 +11,4 @@ libraries:
 
 handlers:
   - url: /_ah/start
-    script: websocket_client_example
+    script: websocket_client_example.py
