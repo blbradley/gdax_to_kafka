@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, 'libs')
+sys.path.insert(0, 'lib')
 
 import logging
 from datetime import datetime
