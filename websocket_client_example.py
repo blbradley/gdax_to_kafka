@@ -2,12 +2,17 @@ import logging
 from datetime import datetime
 import json
 import websocket
+from google.cloud import pubsub_v1
 
 from gdax import subscription_message
 #from gdax import create_raw, subscription_message
 #from myproducer import producer
 
+
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+publisher = pubsub_v1.PublisherClient()
+topic_path = publisher.topic_path('coinsmith-184417', 'gdax-websocket-raw')
 
 def on_message(ws, message):
     #dt = datetime.utcnow()
@@ -19,7 +24,7 @@ def on_message(ws, message):
     #    key=producer.uuid.bytes,
     #)
     #producer.poll(0)
-    logging.warning(message)
+    publisher.publish(topic_path, data=message.encode('utf-8'))
 
 def on_error(ws, error):
     logging.warning(error)
