@@ -1,3 +1,8 @@
 runtime: python27
+api_version: 1
 manual_scaling:
   instances: 1
+
+handlers:
+  - url: /_ah/start
+    script: websocket_client_example
